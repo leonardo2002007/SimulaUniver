@@ -8,12 +8,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-  }
-  #universo {
     background-color: black;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
   }
   #big-bang {
     background-color: white;
@@ -22,27 +17,91 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
+    width: 1px;
+    height: 1px;
     animation: explosao 2s forwards;
   }
+  .particula {
+    border-radius: 50%;
+    position: absolute;
+  }
+  .proton {
+    background-color: red;
+    width: 5px;
+    height: 5px;
+  }
+  .neutron {
+    background-color: blue;
+    width: 5px;
+    height: 5px;
+  }
+  .atomo {
+    border-radius: 50%;
+    position: absolute;
+    background-color: green; /* Cor para representar um átomo */
+    width: 10px;
+    height: 10px;
+  }
   @keyframes explosao {
-    from {
-      width: 20px;
-      height: 20px;
+    0% {
+      width: 1px;
+      height: 1px;
       opacity: 1;
     }
-    to {
-      width: 200vw;
-      height: 200vw;
+    99% {
+      background-color: black;
+    }
+    100% {
+      width: 100vw;
+      height: 100vw;
       opacity: 0;
+      background-color: white;
     }
   }
 </style>
 </head>
 <body>
-<div id="universo">
-  <div id="big-bang"></div>
-</div>
+<div id="big-bang"></div>
+<script>
+  // Código JavaScript para adicionar prótons e nêutrons após a explosão
+  function criarParticulas() {
+    var universo = document.body;
+    for (var i = 0; i < 100; i++) {
+      var particula = document.createElement('div');
+      particula.classList.add('particula');
+      particula.classList.add(Math.random() < 0.5 ? 'proton' : 'neutron');
+      particula.style.top = Math.random() * 100 + '%';
+      particula.style.left = Math.random() * 100 + '%';
+      // Adiciona animação com duração e direção aleatórias
+      var animacao = criarAnimacao();
+      particula.style.animation = animacao;
+      universo.appendChild(particula);
+    }
+  }
+  // Aguarda a explosão terminar para criar as partículas
+  document.getElementById('big-bang').addEventListener('animationend', criarParticulas);
+
+  // Função para criar animações com durações e direções aleatórias
+  function criarAnimacao() {
+    var duracao = (Math.random() * 3 + 1) + 's'; // Reduzindo a duração para aumentar a velocidade
+    var angulo = Math.random() * 360;
+    var distancia = Math.random() * 120 + 'vw';
+    var animacao = 'mover ' + duracao + ' infinite linear 2s';
+    var keyframes = '@keyframes mover {' +
+      '0% { transform: translate(0px, 0px); }' +
+      '100% { transform: translate(' + distancia + ' * cos(' + angulo + 'deg), ' + distancia + ' * sin(' + angulo + 'deg)); }' +
+    '}';
+    // Adiciona os keyframes ao documento
+    var styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    return animacao;
+  }
+
+  // Função para verificar colisões e formar átomos
+  // ... (mantenha a função verificarColisoes do código anterior)
+
+  // Verifica colisões periodicamente
+  setInterval(verificarColisoes, 100);
+</script>
 </body>
 </html>
