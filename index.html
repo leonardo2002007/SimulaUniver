@@ -1,50 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <title>Simulação do Big Bang</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #000;
-        }
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: #fff;
-            opacity: 0.7;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Simulação do Big Bang</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  #universo {
+    background-color: black;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+  #big-bang {
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    animation: explosao 2s forwards;
+  }
+  @keyframes explosao {
+    from {
+      width: 20px;
+      height: 20px;
+      opacity: 1;
+    }
+    to {
+      width: 200vw;
+      height: 200vw;
+      opacity: 0;
+    }
+  }
+</style>
 </head>
 <body>
-    <script>
-        // Cria partículas para simular o Big Bang
-        function createParticles() {
-            for (let i = 0; i < 100; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.width = particle.style.height = Math.random() * 5 + 'px';
-                particle.style.top = Math.random() * window.innerHeight + 'px';
-                particle.style.left = Math.random() * window.innerWidth + 'px';
-                document.body.appendChild(particle);
-            }
-        }
-
-        // Anima as partículas para representar a expansão
-        function animateParticles() {
-            let particles = document.querySelectorAll('.particle');
-            particles.forEach(particle => {
-                let x = (Math.random() - 0.5) * window.innerWidth;
-                let y = (Math.random() - 0.5) * window.innerHeight;
-                let scale = Math.random() * 2;
-                particle.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-                particle.style.opacity = 0;
-            });
-        }
-
-        // Inicia a simulação
-        createParticles();
-        setTimeout(animateParticles, 1000); // Espera 1 segundo antes de iniciar a animação
-    </script>
+<div id="universo">
+  <div id="big-bang"></div>
+</div>
 </body>
 </html>
