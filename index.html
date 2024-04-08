@@ -1,66 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>História do Sistema Solar</title>
-    <style>
-        canvas {
-            border: 1px solid black;
-            background-color: #000;
-        }
-    </style>
-</head>
 <body>
-    <canvas id="sistemaSolar" width="800" height="600"></canvas>
 
-    <script>
-        var canvas = document.getElementById('sistemaSolar');
-        var ctx = canvas.getContext('2d');
+<canvas id="sistemaSolar" width="800" height="600"></canvas>
 
-        // Representação simplificada da evolução do sistema solar
-        function desenharSistemaSolar() {
-            // Limpa o canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+<script>
+var canvas = document.getElementById('sistemaSolar');
+var ctx = canvas.getContext('2d');
 
-            // Desenha a nebulosa planetária
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.beginPath();
-            ctx.arc(400, 300, 200, 0, 2 * Math.PI);
-            ctx.fill();
+// Representa o Sol
+ctx.beginPath();
+ctx.arc(400, 300, 50, 0, 2 * Math.PI);
+ctx.fillStyle = 'yellow';
+ctx.fill();
 
-            // Desenha o disco planetário
-            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
-            ctx.beginPath();
-            ctx.arc(400, 300, 150, 0, 2 * Math.PI);
-            ctx.fill();
+// Representa os planetas
+var planetas = ['Mercúrio', 'Vênus', 'Terra', 'Marte', 'Júpiter', 'Saturno', 'Urano', 'Netuno'];
+var tamanhos = [10, 15, 20, 15, 30, 25, 20, 20];  // Tamanhos arbitrários para os planetas
+var distancias = [60, 80, 100, 120, 150, 180, 210, 240];  // Distâncias arbitrários do sol
 
-            // Desenha o sol no centro
-            ctx.fillStyle = 'yellow';
-            ctx.beginPath();
-            ctx.arc(400, 300, 50, 0, 2 * Math.PI);
-            ctx.fill();
+for (var i = 0; i < planetas.length; i++) {
+    ctx.beginPath();
+    ctx.arc(400, 300, distancias[i], 0, 2 * Math.PI);  // Órbita do planeta
+    ctx.stroke();
 
-            // Desenha os planetas (representação muito simplificada)
-            desenharPlaneta(400, 300, 100, 'brown'); // Júpiter
-            desenharPlaneta(400, 300, 130, 'orange'); // Saturno
-            desenharPlaneta(400, 300, 160, 'blue');   // Urano
-            desenharPlaneta(400, 300, 190, 'darkblue'); // Netuno
+    ctx.beginPath();
+    ctx.arc(400 + distancias[i], 300, tamanhos[i], 0, 2 * Math.PI);  // Planeta
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+}
+</script>
 
-            // ... Código continua para desenhar o resto da evolução
-        }
-
-        function desenharPlaneta(x, y, distancia, cor) {
-            var angulo = Math.random() * 2 * Math.PI;
-            var posX = x + distancia * Math.cos(angulo);
-            var posY = y + distancia * Math.sin(angulo);
-
-            ctx.fillStyle = cor;
-            ctx.beginPath();
-            ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-
-        // Inicia a animação
-        desenharSistemaSolar();
-    </script>
 </body>
 </html>
