@@ -1,107 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Simulação do Big Bang</title>
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-  }
-  #big-bang {
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1px;
-    height: 1px;
-    animation: explosao 2s forwards;
-  }
-  .particula {
-    border-radius: 50%;
-    position: absolute;
-  }
-  .proton {
-    background-color: red;
-    width: 5px;
-    height: 5px;
-  }
-  .neutron {
-    background-color: blue;
-    width: 5px;
-    height: 5px;
-  }
-  .atomo {
-    border-radius: 50%;
-    position: absolute;
-    background-color: green; /* Cor para representar um átomo */
-    width: 10px;
-    height: 10px;
-  }
-  @keyframes explosao {
-    0% {
-      width: 1px;
-      height: 1px;
-      opacity: 1;
-    }
-    99% {
-      background-color: black;
-    }
-    100% {
-      width: 100vw;
-      height: 100vw;
-      opacity: 0;
-      background-color: white;
-    }
-  }
-</style>
+    <title>História do Sistema Solar</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            background-color: #000;
+        }
+    </style>
 </head>
 <body>
-<div id="big-bang"></div>
-<script>
-  // Código JavaScript para adicionar prótons e nêutrons após a explosão
-  function criarParticulas() {
-    var universo = document.body;
-    for (var i = 0; i < 100; i++) {
-      var particula = document.createElement('div');
-      particula.classList.add('particula');
-      particula.classList.add(Math.random() < 0.5 ? 'proton' : 'neutron');
-      particula.style.top = Math.random() * 100 + '%';
-      particula.style.left = Math.random() * 100 + '%';
-      // Adiciona animação com duração e direção aleatórias
-      var animacao = criarAnimacao();
-      particula.style.animation = animacao;
-      universo.appendChild(particula);
-    }
-  }
-  // Aguarda a explosão terminar para criar as partículas
-  document.getElementById('big-bang').addEventListener('animationend', criarParticulas);
+    <canvas id="sistemaSolar" width="800" height="600"></canvas>
 
-  // Função para criar animações com durações e direções aleatórias
-  function criarAnimacao() {
-    var duracao = (Math.random() * 3 + 1) + 's'; // Reduzindo a duração para aumentar a velocidade
-    var angulo = Math.random() * 360;
-    var distancia = Math.random() * 120 + 'vw';
-    var animacao = 'mover ' + duracao + ' infinite linear 2s';
-    var keyframes = '@keyframes mover {' +
-      '0% { transform: translate(0px, 0px); }' +
-      '100% { transform: translate(' + distancia + ' * cos(' + angulo + 'deg), ' + distancia + ' * sin(' + angulo + 'deg)); }' +
-    '}';
-    // Adiciona os keyframes ao documento
-    var styleSheet = document.styleSheets[0];
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    return animacao;
-  }
+    <script>
+        var canvas = document.getElementById('sistemaSolar');
+        var ctx = canvas.getContext('2d');
 
-  // Função para verificar colisões e formar átomos
-  // ... (mantenha a função verificarColisoes do código anterior)
+        // Representação simplificada da evolução do sistema solar
+        function desenharSistemaSolar() {
+            // Limpa o canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Verifica colisões periodicamente
-  setInterval(verificarColisoes, 100);
-</script>
+            // Desenha a nebulosa planetária
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.beginPath();
+            ctx.arc(400, 300, 200, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Desenha o disco planetário
+            ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+            ctx.beginPath();
+            ctx.arc(400, 300, 150, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Desenha o sol no centro
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.arc(400, 300, 50, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Desenha os planetas (representação muito simplificada)
+            desenharPlaneta(400, 300, 100, 'brown'); // Júpiter
+            desenharPlaneta(400, 300, 130, 'orange'); // Saturno
+            desenharPlaneta(400, 300, 160, 'blue');   // Urano
+            desenharPlaneta(400, 300, 190, 'darkblue'); // Netuno
+
+            // ... Código continua para desenhar o resto da evolução
+        }
+
+        function desenharPlaneta(x, y, distancia, cor) {
+            var angulo = Math.random() * 2 * Math.PI;
+            var posX = x + distancia * Math.cos(angulo);
+            var posY = y + distancia * Math.sin(angulo);
+
+            ctx.fillStyle = cor;
+            ctx.beginPath();
+            ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        // Inicia a animação
+        desenharSistemaSolar();
+    </script>
 </body>
 </html>
